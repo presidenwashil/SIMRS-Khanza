@@ -842,6 +842,31 @@ public class PanelDiagnosa extends widget.panelisi {
     public void simpan(){
         try {
             koneksi.setAutoCommit(false);
+            
+            if (status.equals("Ralan")) {
+                Sequel.updateSMC(
+                    "resume_pasien",
+                    "kd_diagnosa_utama = '', diagnosa_utama = '', "
+                    + "kd_diagnosa_sekunder = '', diagnosa_sekunder = '', "
+                    + "kd_diagnosa_sekunder2 = '', diagnosa_sekunder2 = '', "
+                    + "kd_diagnosa_sekunder3 = '', diagnosa_sekunder3 = '', "
+                    + "kd_diagnosa_sekunder4 = '', diagnosa_sekunder4 = ''", 
+                    "no_rawat = ?", 
+                    norawat
+                );
+            } else if (status.equals("Ranap")) {
+                Sequel.updateSMC(
+                    "resume_pasien_ranap",
+                    "kd_diagnosa_utama = '', diagnosa_utama = '', "
+                    + "kd_diagnosa_sekunder = '', diagnosa_sekunder = '', "
+                    + "kd_diagnosa_sekunder2 = '', diagnosa_sekunder2 = '', "
+                    + "kd_diagnosa_sekunder3 = '', diagnosa_sekunder3 = '', "
+                    + "kd_diagnosa_sekunder4 = '', diagnosa_sekunder4 = ''", 
+                    "no_rawat = ?", 
+                    norawat
+                );
+            }
+            
             index=1;
             for(i=0;i<tbDiagnosa.getRowCount();i++){ 
                 if(tbDiagnosa.getValueAt(i,0).toString().equals("true")){
@@ -859,56 +884,56 @@ public class PanelDiagnosa extends widget.panelisi {
                             norawat,tbDiagnosa.getValueAt(i,1).toString(),status,
                             Sequel.cariIsi("select ifnull(MAX(diagnosa_pasien.prioritas)+1,1) from diagnosa_pasien where diagnosa_pasien.no_rawat=? and diagnosa_pasien.status='"+status+"'",norawat),"Baru"
                         });
-                    }  
+                    }
                     
                     if(index==1){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_utama=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_utama = ?, diagnosa_utama = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_utama=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_utama = ?, diagnosa_utama = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }   
                     }else if(index==2){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder = ?, diagnosa_sekunder = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder = ?, diagnosa_sekunder = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }
                     }else if(index==3){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder2=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder2 = ?, diagnosa_sekunder2 = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder2=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder2 = ?, diagnosa_sekunder2 = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }
                     }else if(index==4){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder3=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder3 = ?, diagnosa_sekunder3 = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder3=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder3 = ?, diagnosa_sekunder3 = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }   
                     }else if(index==5){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder4=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_diagnosa_sekunder4 = ?, diagnosa_sekunder4 = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder4=?",2,new String[]{
-                                tbDiagnosa.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_diagnosa_sekunder4 = ?, diagnosa_sekunder4 = ?", 3, new String[]{
+                                tbDiagnosa.getValueAt(i, 1).toString(), tbDiagnosa.getValueAt(i, 2).toString(), norawat
                             });
                         }
                     }

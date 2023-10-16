@@ -1270,7 +1270,7 @@
                             <Component class="widget.CekBox" name="chkAsuhanPreAnestesi">
                               <Properties>
                                 <Property name="selected" type="boolean" value="true"/>
-                                <Property name="text" type="java.lang.String" value="Penilaian Pre Operasi"/>
+                                <Property name="text" type="java.lang.String" value="Penilaian Pre Anestesi"/>
                                 <Property name="horizontalAlignment" type="int" value="2"/>
                                 <Property name="name" type="java.lang.String" value="chkAsuhanPreAnestesi" noResource="true"/>
                                 <Property name="opaque" type="boolean" value="false"/>
@@ -1558,7 +1558,7 @@
                             <Component class="widget.CekBox" name="chkCatatanADIMEGizi">
                               <Properties>
                                 <Property name="selected" type="boolean" value="true"/>
-                                <Property name="text" type="java.lang.String" value="Monitoring Gizi"/>
+                                <Property name="text" type="java.lang.String" value="Catatan ADIME Gizi"/>
                                 <Property name="horizontalAlignment" type="int" value="2"/>
                                 <Property name="name" type="java.lang.String" value="chkCatatanADIMEGizi" noResource="true"/>
                                 <Property name="opaque" type="boolean" value="false"/>

@@ -1146,7 +1146,7 @@ public final class RMRiwayatPerawatan extends javax.swing.JDialog {
         FormMenu.add(chkAsuhanPreOperasi);
 
         chkAsuhanPreAnestesi.setSelected(true);
-        chkAsuhanPreAnestesi.setText("Penilaian Pre Operasi");
+        chkAsuhanPreAnestesi.setText("Penilaian Pre Anestesi");
         chkAsuhanPreAnestesi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkAsuhanPreAnestesi.setName("chkAsuhanPreAnestesi"); // NOI18N
         chkAsuhanPreAnestesi.setOpaque(false);
@@ -1338,7 +1338,7 @@ public final class RMRiwayatPerawatan extends javax.swing.JDialog {
         FormMenu.add(chkMonitoringGizi);
 
         chkCatatanADIMEGizi.setSelected(true);
-        chkCatatanADIMEGizi.setText("Monitoring Gizi");
+        chkCatatanADIMEGizi.setText("Catatan ADIME Gizi");
         chkCatatanADIMEGizi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         chkCatatanADIMEGizi.setName("chkCatatanADIMEGizi"); // NOI18N
         chkCatatanADIMEGizi.setOpaque(false);
@@ -4254,14 +4254,18 @@ private void BtnPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                     if(chkResume.isSelected()==true){
                         try {
                             rs2=koneksi.prepareStatement(
-                                "select resume_pasien.kd_dokter,dokter.nm_dokter,resume_pasien.kondisi_pulang,resume_pasien.keluhan_utama, "+
-                                "resume_pasien.jalannya_penyakit,resume_pasien.pemeriksaan_penunjang,resume_pasien.hasil_laborat,resume_pasien.diagnosa_utama,resume_pasien.kd_diagnosa_utama, "+
-                                "resume_pasien.diagnosa_sekunder,resume_pasien.kd_diagnosa_sekunder,resume_pasien.diagnosa_sekunder2,resume_pasien.kd_diagnosa_sekunder2, "+
-                                "resume_pasien.diagnosa_sekunder3,resume_pasien.kd_diagnosa_sekunder3,resume_pasien.diagnosa_sekunder4,resume_pasien.kd_diagnosa_sekunder4, "+
-                                "resume_pasien.prosedur_utama,resume_pasien.kd_prosedur_utama,resume_pasien.prosedur_sekunder,resume_pasien.kd_prosedur_sekunder, "+
-                                "resume_pasien.prosedur_sekunder2,resume_pasien.kd_prosedur_sekunder2,resume_pasien.prosedur_sekunder3,resume_pasien.kd_prosedur_sekunder3, "+
-                                "resume_pasien.obat_pulang from resume_pasien inner join dokter on resume_pasien.kd_dokter=dokter.kd_dokter "+
-                                "where resume_pasien.no_rawat='"+rs.getString("no_rawat")+"'").executeQuery();
+                                "select\n" +
+                                    "resume_pasien.kd_dokter, dokter.nm_dokter, resume_pasien.kondisi_pulang, resume_pasien.keluhan_utama, resume_pasien.jalannya_penyakit, resume_pasien.pemeriksaan_penunjang, resume_pasien.hasil_laborat,\n" +
+                                    "if (trim(resume_pasien.diagnosa_utama) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = resume_pasien.kd_diagnosa_utama), resume_pasien.diagnosa_utama) diagnosa_utama, resume_pasien.kd_diagnosa_utama,\n" +
+                                    "if (trim(resume_pasien.diagnosa_sekunder) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = resume_pasien.kd_diagnosa_sekunder), resume_pasien.diagnosa_sekunder) diagnosa_sekunder, resume_pasien.kd_diagnosa_sekunder,\n" +
+                                    "if (trim(resume_pasien.diagnosa_sekunder2) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = resume_pasien.kd_diagnosa_sekunder2), resume_pasien.diagnosa_sekunder2) diagnosa_sekunder2, resume_pasien.kd_diagnosa_sekunder2,\n" +
+                                    "if (trim(resume_pasien.diagnosa_sekunder3) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = resume_pasien.kd_diagnosa_sekunder3), resume_pasien.diagnosa_sekunder3) diagnosa_sekunder3, resume_pasien.kd_diagnosa_sekunder3,\n" +
+                                    "if (trim(resume_pasien.diagnosa_sekunder4) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = resume_pasien.kd_diagnosa_sekunder4), resume_pasien.diagnosa_sekunder) diagnosa_sekunder4, resume_pasien.kd_diagnosa_sekunder4,\n" +
+                                    "resume_pasien.prosedur_utama, resume_pasien.kd_prosedur_utama, resume_pasien.prosedur_sekunder, resume_pasien.kd_prosedur_sekunder, resume_pasien.prosedur_sekunder2, resume_pasien.kd_prosedur_sekunder2,\n" +
+                                    "resume_pasien.prosedur_sekunder3, resume_pasien.kd_prosedur_sekunder3, resume_pasien.obat_pulang\n" +
+                                "from resume_pasien join dokter on resume_pasien.kd_dokter = dokter.kd_dokter\n" +
+                                "where resume_pasien.no_rawat = '" + rs.getString("no_rawat") + "'"
+                            ).executeQuery();
                             if(rs2.next()){
                                 htmlContent.append(
                                   "<tr class='isi'>"+ 
@@ -4351,15 +4355,19 @@ private void BtnPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                         }
                         try {
                             rs2=koneksi.prepareStatement(
-                                "select resume_pasien_ranap.kd_dokter,dokter.nm_dokter,resume_pasien_ranap.diagnosa_awal,resume_pasien_ranap.alasan,resume_pasien_ranap.keluhan_utama,resume_pasien_ranap.pemeriksaan_fisik,"+
-                                "resume_pasien_ranap.jalannya_penyakit,resume_pasien_ranap.pemeriksaan_penunjang,resume_pasien_ranap.hasil_laborat,resume_pasien_ranap.tindakan_dan_operasi,resume_pasien_ranap.obat_di_rs,"+
-                                "resume_pasien_ranap.diagnosa_utama,resume_pasien_ranap.kd_diagnosa_utama,resume_pasien_ranap.diagnosa_sekunder,resume_pasien_ranap.kd_diagnosa_sekunder,resume_pasien_ranap.diagnosa_sekunder2,"+
-                                "resume_pasien_ranap.kd_diagnosa_sekunder2,resume_pasien_ranap.diagnosa_sekunder3,resume_pasien_ranap.kd_diagnosa_sekunder3,resume_pasien_ranap.diagnosa_sekunder4,"+
-                                "resume_pasien_ranap.kd_diagnosa_sekunder4,resume_pasien_ranap.prosedur_utama,resume_pasien_ranap.kd_prosedur_utama,resume_pasien_ranap.prosedur_sekunder,resume_pasien_ranap.kd_prosedur_sekunder,"+
-                                "resume_pasien_ranap.prosedur_sekunder2,resume_pasien_ranap.kd_prosedur_sekunder2,resume_pasien_ranap.prosedur_sekunder3,resume_pasien_ranap.kd_prosedur_sekunder3,resume_pasien_ranap.alergi,"+
-                                "resume_pasien_ranap.diet,resume_pasien_ranap.lab_belum,resume_pasien_ranap.edukasi,resume_pasien_ranap.cara_keluar,resume_pasien_ranap.ket_keluar,resume_pasien_ranap.keadaan,"+
-                                "resume_pasien_ranap.ket_keadaan,resume_pasien_ranap.dilanjutkan,resume_pasien_ranap.ket_dilanjutkan,resume_pasien_ranap.kontrol,resume_pasien_ranap.obat_pulang "+
-                                "from resume_pasien_ranap inner join dokter on resume_pasien_ranap.kd_dokter=dokter.kd_dokter where resume_pasien_ranap.no_rawat='"+rs.getString("no_rawat")+"'").executeQuery();
+                                "select\n" +
+                                    "resume_pasien_ranap.kd_dokter, dokter.nm_dokter, resume_pasien_ranap.diagnosa_awal, resume_pasien_ranap.alasan, resume_pasien_ranap.keluhan_utama, resume_pasien_ranap.pemeriksaan_fisik,\n" +
+                                    "resume_pasien_ranap.jalannya_penyakit, resume_pasien_ranap.pemeriksaan_penunjang,resume_pasien_ranap.hasil_laborat, resume_pasien_ranap.tindakan_dan_operasi, resume_pasien_ranap.obat_di_rs,\n" +
+                                    "if (trim(resume_pasien_ranap.diagnosa_utama) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = trim(resume_pasien_ranap.kd_diagnosa_utama)), resume_pasien_ranap.diagnosa_utama) diagnosa_utama, resume_pasien_ranap.kd_diagnosa_utama,\n" +
+                                    "if (trim(resume_pasien_ranap.diagnosa_sekunder) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = trim(resume_pasien_ranap.kd_diagnosa_sekunder)), resume_pasien_ranap.diagnosa_sekunder) diagnosa_sekunder, resume_pasien_ranap.kd_diagnosa_sekunder,\n" +
+                                    "if (trim(resume_pasien_ranap.diagnosa_sekunder2) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = trim(resume_pasien_ranap.kd_diagnosa_sekunder2)), resume_pasien_ranap.diagnosa_sekunder2) diagnosa_sekunder2, resume_pasien_ranap.kd_diagnosa_sekunder2,\n" +
+                                    "if (trim(resume_pasien_ranap.diagnosa_sekunder3) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = trim(resume_pasien_ranap.kd_diagnosa_sekunder3)), resume_pasien_ranap.diagnosa_sekunder3) diagnosa_sekunder3, resume_pasien_ranap.kd_diagnosa_sekunder3,\n" +
+                                    "if (trim(resume_pasien_ranap.diagnosa_sekunder4) = '', (select penyakit.nm_penyakit from penyakit where penyakit.kd_penyakit = trim(resume_pasien_ranap.kd_diagnosa_sekunder4)), resume_pasien_ranap.diagnosa_sekunder4) diagnosa_sekunder4, resume_pasien_ranap.kd_diagnosa_sekunder4,\n" +
+                                    "resume_pasien_ranap.prosedur_utama, resume_pasien_ranap.kd_prosedur_utama, resume_pasien_ranap.prosedur_sekunder, resume_pasien_ranap.kd_prosedur_sekunder, resume_pasien_ranap.prosedur_sekunder2, resume_pasien_ranap.kd_prosedur_sekunder2, resume_pasien_ranap.prosedur_sekunder3, resume_pasien_ranap.kd_prosedur_sekunder3,\n" +
+                                    "resume_pasien_ranap.alergi, resume_pasien_ranap.diet, resume_pasien_ranap.lab_belum, resume_pasien_ranap.edukasi, resume_pasien_ranap.cara_keluar, resume_pasien_ranap.ket_keluar, resume_pasien_ranap.keadaan, resume_pasien_ranap.ket_keadaan, resume_pasien_ranap.dilanjutkan, resume_pasien_ranap.ket_dilanjutkan,\n" +
+                                    "resume_pasien_ranap.kontrol, resume_pasien_ranap.obat_pulang\n" +
+                                "from resume_pasien_ranap join dokter on resume_pasien_ranap.kd_dokter = dokter.kd_dokter\n" +
+                                "where resume_pasien_ranap.no_rawat = '" + rs.getString("no_rawat") + "'").executeQuery();
                             if(rs2.next()){
                                 htmlContent.append(
                                   "<tr class='isi'>"+ 
