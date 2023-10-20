@@ -951,6 +951,29 @@ public class PanelDiagnosa extends widget.panelisi {
 
         try {
             koneksi.setAutoCommit(false);
+            
+            if (status.equals("Ralan")) {
+                Sequel.updateSMC(
+                    "resume_pasien",
+                    "kd_prosedur_utama = '', prosedur_utama = '', "
+                    + "kd_prosedur_sekunder = '', prosedur_sekunder = '', "
+                    + "kd_prosedur_sekunder2 = '', prosedur_sekunder2 = '', "
+                    + "kd_prosedur_sekunder3 = '', prosedur_sekunder3 = ''", 
+                    "no_rawat = ?", 
+                    norawat
+                );
+            } else if (status.equals("Ranap")) {
+                Sequel.updateSMC(
+                    "resume_pasien_ranap",
+                    "kd_prosedur_utama = '', prosedur_utama = '', "
+                    + "kd_prosedur_sekunder = '', prosedur_sekunder = '', "
+                    + "kd_prosedur_sekunder2 = '', prosedur_sekunder2 = '', "
+                    + "kd_prosedur_sekunder3 = '', prosedur_sekunder3 = ''", 
+                    "no_rawat = ?", 
+                    norawat
+                );
+            }
+            
             index=1;
             for(i=0;i<tbProsedur.getRowCount();i++){ 
                 if(tbProsedur.getValueAt(i,0).toString().equals("true")){
@@ -960,42 +983,42 @@ public class PanelDiagnosa extends widget.panelisi {
                     
                     if(index==1){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_utama=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_utama=?, prosedur_utama=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_utama=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_utama=?, prosedur_utama=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }
                     }else if(index==2){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder=?, prosedur_sekunder=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_sekunder=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_sekunder=?, prosedur_sekunder=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }
                     }else if(index==3){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder2=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder2=?, prosedur_sekunder2=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_sekunder2=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_sekunder2=?, prosedur_sekunder2=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }
                     }else if(index==4){
                         if(status.equals("Ralan")){
-                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder3=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien","no_rawat=?","kd_prosedur_sekunder3=?, prosedur_sekunder3=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }else if(status.equals("Ranap")){
-                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_sekunder3=?",2,new String[]{
-                                tbProsedur.getValueAt(i,1).toString(),norawat
+                            Sequel.mengedit("resume_pasien_ranap","no_rawat=?","kd_prosedur_sekunder3=?, prosedur_sekunder3=?",3,new String[]{
+                                tbProsedur.getValueAt(i,1).toString(), tbProsedur.getValueAt(i,2).toString(),norawat
                             });
                         }
                     }
