@@ -5537,6 +5537,10 @@ private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_B
                             ranap_dokterserv+ranap_paramedisserv+ralan_dokterserv+
                             ralan_paramedisserv+tambahanserv+potonganserv+
                             kamarserv+registrasiserv+harianserv+retur_Obatserv+resep_Pulangserv),100);
+                    if (rsservice.getDouble("maks_rupiah") > 0 && ttlService > rsservice.getDouble("maks_rupiah")) {
+                        ttlService = rsservice.getDouble("maks_rupiah");
+                    }
+                    
                     ttl=ttl+ttlService;
                     tabModeRwJlDr.addRow(new Object[]{true,rsservice.getString("nama_service"),":","",null,null,null,ttlService,"Service"});
                 }                    

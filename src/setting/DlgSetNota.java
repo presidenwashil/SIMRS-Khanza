@@ -116,6 +116,7 @@ public class DlgSetNota extends javax.swing.JDialog {
         NotaToko.setDocument(new batasInput((byte)11).getKata(NotaToko));        
         NamaService.setDocument(new batasInput((byte)100).getKata(NamaService));
         BesarBiaya.setDocument(new batasInput((byte)5).getKata(BesarBiaya));
+        BiayaMaksNonPiutang.setDocument(new batasInput((byte) 15).getOnlyAngka(BiayaMaksNonPiutang));
         NamaService1.setDocument(new batasInput((byte)100).getKata(NamaService));
         BesarBiaya1.setDocument(new batasInput((byte)5).getKata(BesarBiaya));
         
@@ -243,6 +244,9 @@ public class DlgSetNota extends javax.swing.JDialog {
         chkHarian = new widget.CekBox();
         chkResepPulang = new widget.CekBox();
         jLabel35 = new widget.Label();
+        BiayaMaksNonPiutang = new widget.TextBox();
+        jLabel48 = new widget.Label();
+        jLabel49 = new widget.Label();
         internalFrame4 = new widget.InternalFrame();
         Scroll2 = new widget.ScrollPane();
         tbAdmin3 = new widget.Table();
@@ -1007,7 +1011,7 @@ public class DlgSetNota extends javax.swing.JDialog {
         PanelInput2.add(ChkInput2, java.awt.BorderLayout.PAGE_END);
 
         FormInput2.setName("FormInput2"); // NOI18N
-        FormInput2.setPreferredSize(new java.awt.Dimension(44, 165));
+        FormInput2.setPreferredSize(new java.awt.Dimension(44, 198));
         FormInput2.setLayout(null);
 
         jLabel31.setText("Nama Service/Administrasi :");
@@ -1256,6 +1260,31 @@ public class DlgSetNota extends javax.swing.JDialog {
         jLabel35.setName("jLabel35"); // NOI18N
         FormInput2.add(jLabel35);
         jLabel35.setBounds(194, 42, 35, 23);
+
+        BiayaMaksNonPiutang.setHighlighter(null);
+        BiayaMaksNonPiutang.setName("BiayaMaksNonPiutang"); // NOI18N
+        BiayaMaksNonPiutang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BiayaMaksNonPiutangActionPerformed(evt);
+            }
+        });
+        BiayaMaksNonPiutang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BiayaMaksNonPiutangKeyPressed(evt);
+            }
+        });
+        FormInput2.add(BiayaMaksNonPiutang);
+        BiayaMaksNonPiutang.setBounds(175, 162, 347, 23);
+
+        jLabel48.setText("Rp.");
+        jLabel48.setName("jLabel48"); // NOI18N
+        FormInput2.add(jLabel48);
+        jLabel48.setBounds(152, 162, 20, 23);
+
+        jLabel49.setText("Maks. Biaya :");
+        jLabel49.setName("jLabel49"); // NOI18N
+        FormInput2.add(jLabel49);
+        jLabel49.setBounds(0, 162, 150, 23);
 
         PanelInput2.add(FormInput2, java.awt.BorderLayout.CENTER);
 
@@ -1651,13 +1680,15 @@ public class DlgSetNota extends javax.swing.JDialog {
                 }if(chkResepPulang.isSelected()==true){
                     resep_Pulang="Yes";
                 }
-                if(Sequel.menyimpantf("set_service_ranap","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",17,new String[]{
-                    NamaService.getText(),BesarBiaya.getText(),laborat,radiologi,operasi,obat,ranap_dokter,ranap_paramedis,
-                    ralan_dokter,ralan_paramedis,tambahan,potongan,kamar,registrasi,harian,retur_Obat,resep_Pulang
-                })==true){
+                
+                if (Sequel.menyimpantfSmc("set_service_ranap", null, new String[] {
+                    NamaService.getText(), BesarBiaya.getText(), laborat, radiologi, operasi, obat, ranap_dokter, ranap_paramedis,
+                    ralan_dokter, ralan_paramedis, tambahan, potongan, kamar, registrasi, harian, retur_Obat, resep_Pulang, BiayaMaksNonPiutang.getText()
+                })) {
                     tampil2();
                     emptTeks2();
                 }
+                
             }else if(tabMode2.getRowCount()>0){
                 JOptionPane.showMessageDialog(null,"Maaf, Hanya diijinkan satu Set Biaya Service Rawat Inap...!!!!");
                 NamaService.requestFocus();
@@ -2324,6 +2355,14 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         Valid.pindah(evt, cmbYesTombolNotaPenjualan,cmbYesTombolNotaPenjualanToko);
     }//GEN-LAST:event_cmbYesCetakPenjualanTokoKeyPressed
 
+    private void BiayaMaksNonPiutangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BiayaMaksNonPiutangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BiayaMaksNonPiutangActionPerformed
+
+    private void BiayaMaksNonPiutangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BiayaMaksNonPiutangKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BiayaMaksNonPiutangKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -2343,6 +2382,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private widget.TextBox BesarBiaya;
     private widget.TextBox BesarBiaya1;
+    private widget.TextBox BiayaMaksNonPiutang;
     private widget.Button BtnBatal;
     private widget.Button BtnEdit;
     private widget.Button BtnHapus;
@@ -2465,6 +2505,8 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private widget.Label jLabel45;
     private widget.Label jLabel46;
     private widget.Label jLabel47;
+    private widget.Label jLabel48;
+    private widget.Label jLabel49;
     private widget.Label jLabel5;
     private widget.Label jLabel6;
     private widget.Label jLabel7;
@@ -2535,7 +2577,8 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                 rs=ps.executeQuery();
                 while(rs.next()){
                     tabMode2.addRow(new Object[]{" Nama Service/Administrasi",rs.getString(1)});
-                    tabMode2.addRow(new Object[]{" Besar Biaya(%)",rs.getString(2)});
+                    tabMode2.addRow(new Object[]{" Besar Biaya (%)",rs.getString(2)});
+                    tabMode2.addRow(new Object[]{" Maks. Biaya (Rp)",rs.getString(18)});
                     tabMode2.addRow(new Object[]{" Biaya Diambil Dari :",""});
                     tabMode2.addRow(new Object[]{"    Laborat",rs.getString(3)});
                     tabMode2.addRow(new Object[]{"    Radiologi",rs.getString(4)});
@@ -2840,6 +2883,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     public void emptTeks2() {
         NamaService.setText("");
         BesarBiaya.setText("");
+        BiayaMaksNonPiutang.setText("");
         chkLaborat.setSelected(false);
         chkRadiologi.setSelected(false);
         chkOperasi.setSelected(false);
@@ -2894,7 +2938,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private void isForm2(){
         if(ChkInput2.isSelected()==true){
             ChkInput2.setVisible(false);
-            PanelInput2.setPreferredSize(new Dimension(WIDTH,187));
+            PanelInput2.setPreferredSize(new Dimension(WIDTH,217));
             FormInput2.setVisible(true);      
             ChkInput2.setVisible(true);
         }else if(ChkInput2.isSelected()==false){           
