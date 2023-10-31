@@ -274,6 +274,9 @@ public class DlgSetNota extends javax.swing.JDialog {
         chkResepPulang1 = new widget.CekBox();
         chkHarian1 = new widget.CekBox();
         jLabel38 = new widget.Label();
+        jLabel50 = new widget.Label();
+        BiayaMaksPiutang = new widget.TextBox();
+        jLabel51 = new widget.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -1342,7 +1345,7 @@ public class DlgSetNota extends javax.swing.JDialog {
         PanelInput3.add(ChkInput3, java.awt.BorderLayout.PAGE_END);
 
         FormInput3.setName("FormInput3"); // NOI18N
-        FormInput3.setPreferredSize(new java.awt.Dimension(44, 165));
+        FormInput3.setPreferredSize(new java.awt.Dimension(44, 195));
         FormInput3.setLayout(null);
 
         jLabel32.setText("Nama Service/Administrasi :");
@@ -1592,6 +1595,31 @@ public class DlgSetNota extends javax.swing.JDialog {
         FormInput3.add(jLabel38);
         jLabel38.setBounds(194, 42, 35, 23);
 
+        jLabel50.setText("Maks. Biaya :");
+        jLabel50.setName("jLabel50"); // NOI18N
+        FormInput3.add(jLabel50);
+        jLabel50.setBounds(0, 162, 150, 23);
+
+        BiayaMaksPiutang.setHighlighter(null);
+        BiayaMaksPiutang.setName("BiayaMaksPiutang"); // NOI18N
+        BiayaMaksPiutang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BiayaMaksPiutangActionPerformed(evt);
+            }
+        });
+        BiayaMaksPiutang.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BiayaMaksPiutangKeyPressed(evt);
+            }
+        });
+        FormInput3.add(BiayaMaksPiutang);
+        BiayaMaksPiutang.setBounds(175, 162, 347, 23);
+
+        jLabel51.setText("Rp.");
+        jLabel51.setName("jLabel51"); // NOI18N
+        FormInput3.add(jLabel51);
+        jLabel51.setBounds(152, 162, 20, 23);
+
         PanelInput3.add(FormInput3, java.awt.BorderLayout.CENTER);
 
         internalFrame4.add(PanelInput3, java.awt.BorderLayout.PAGE_START);
@@ -1744,10 +1772,10 @@ public class DlgSetNota extends javax.swing.JDialog {
                 }if(chkResepPulang1.isSelected()==true){
                     resep_Pulang="Yes";
                 }
-                if(Sequel.menyimpantf("set_service_ranap_piutang","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",17,new String[]{
-                    NamaService1.getText(),BesarBiaya1.getText(),laborat,radiologi,operasi,obat,ranap_dokter,ranap_paramedis,
-                    ralan_dokter,ralan_paramedis,tambahan,potongan,kamar,registrasi,harian,retur_Obat,resep_Pulang
-                })==true){
+                if (Sequel.menyimpantfSmc("set_service_ranap_piutang", null, new String[] {
+                    NamaService1.getText(), BesarBiaya1.getText(), laborat, radiologi, operasi, obat, ranap_dokter, ranap_paramedis,
+                    ralan_dokter, ralan_paramedis, tambahan, potongan, kamar, registrasi, harian, retur_Obat, resep_Pulang, BiayaMaksPiutang.getText()
+                })) {
                     tampil3();
                     emptTeks3();
                 }
@@ -1984,11 +2012,13 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                 }if(chkResepPulang.isSelected()==true){
                     resep_Pulang="Yes";
                 }
+                
                 Sequel.queryu("delete from set_service_ranap");
-                if(Sequel.menyimpantf("set_service_ranap","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",17,new String[]{
-                    NamaService.getText(),BesarBiaya.getText(),laborat,radiologi,operasi,obat,ranap_dokter,ranap_paramedis,
-                    ralan_dokter,ralan_paramedis,tambahan,potongan,kamar,registrasi,harian,retur_Obat,resep_Pulang
-                })==true){
+                
+                if (Sequel.menyimpantfSmc("set_service_ranap", null, new String[] {
+                    NamaService.getText(), BesarBiaya.getText(), laborat, radiologi, operasi, obat, ranap_dokter, ranap_paramedis,
+                    ralan_dokter, ralan_paramedis, tambahan, potongan, kamar, registrasi, harian, retur_Obat, resep_Pulang, BiayaMaksNonPiutang.getText()
+                })) {
                     tampil2();
                     emptTeks2();
                 }
@@ -2045,10 +2075,10 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                     resep_Pulang="Yes";
                 }
                 Sequel.queryu("delete from set_service_ranap_piutang");
-                if(Sequel.menyimpantf("set_service_ranap_piutang","?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?","Data",17,new String[]{
-                    NamaService1.getText(),BesarBiaya1.getText(),laborat,radiologi,operasi,obat,ranap_dokter,ranap_paramedis,
-                    ralan_dokter,ralan_paramedis,tambahan,potongan,kamar,registrasi,harian,retur_Obat,resep_Pulang
-                })==true){
+                if (Sequel.menyimpantfSmc("set_service_ranap_piutang", null, new String[] {
+                    NamaService1.getText(), BesarBiaya1.getText(), laborat, radiologi, operasi, obat, ranap_dokter, ranap_paramedis,
+                    ralan_dokter, ralan_paramedis, tambahan, potongan, kamar, registrasi, harian, retur_Obat, resep_Pulang, BiayaMaksPiutang.getText()
+                })) {
                     tampil3();
                     emptTeks3();
                 }
@@ -2363,6 +2393,14 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         // TODO add your handling code here:
     }//GEN-LAST:event_BiayaMaksNonPiutangKeyPressed
 
+    private void BiayaMaksPiutangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BiayaMaksPiutangActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BiayaMaksPiutangActionPerformed
+
+    private void BiayaMaksPiutangKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BiayaMaksPiutangKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BiayaMaksPiutangKeyPressed
+
     /**
     * @param args the command line arguments
     */
@@ -2383,6 +2421,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private widget.TextBox BesarBiaya;
     private widget.TextBox BesarBiaya1;
     private widget.TextBox BiayaMaksNonPiutang;
+    private widget.TextBox BiayaMaksPiutang;
     private widget.Button BtnBatal;
     private widget.Button BtnEdit;
     private widget.Button BtnHapus;
@@ -2508,6 +2547,8 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private widget.Label jLabel48;
     private widget.Label jLabel49;
     private widget.Label jLabel5;
+    private widget.Label jLabel50;
+    private widget.Label jLabel51;
     private widget.Label jLabel6;
     private widget.Label jLabel7;
     private widget.Label jLabel8;
@@ -2620,6 +2661,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
                 while(rs.next()){
                     tabMode3.addRow(new Object[]{" Nama Service/Administrasi",rs.getString(1)});
                     tabMode3.addRow(new Object[]{" Besar Biaya(%)",rs.getString(2)});
+                    tabMode3.addRow(new Object[]{" Maks. Biaya (Rp)",rs.getString(18)});
                     tabMode3.addRow(new Object[]{" Biaya Diambil Dari :",""});
                     tabMode3.addRow(new Object[]{"    Laborat",rs.getString(3)});
                     tabMode3.addRow(new Object[]{"    Radiologi",rs.getString(4)});
@@ -2691,79 +2733,80 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         if(row!= -1){
             NamaService.setText(tbAdmin2.getValueAt(0,1).toString());            
             BesarBiaya.setText(tbAdmin2.getValueAt(1,1).toString());    
-            if(tbAdmin2.getValueAt(3,1).toString().equals("Yes")){
+            BiayaMaksNonPiutang.setText(tbAdmin2.getValueAt(2, 1).toString());
+            if(tbAdmin2.getValueAt(4,1).toString().equals("Yes")){
                 chkLaborat.setSelected(true);
-            }else if(tbAdmin2.getValueAt(3,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(4,1).toString().equals("No")){
                 chkLaborat.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(4,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(5,1).toString().equals("Yes")){
                 chkRadiologi.setSelected(true);
-            }else if(tbAdmin2.getValueAt(4,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(5,1).toString().equals("No")){
                 chkRadiologi.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(5,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(6,1).toString().equals("Yes")){
                 chkOperasi.setSelected(true);
-            }else if(tbAdmin2.getValueAt(5,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(6,1).toString().equals("No")){
                 chkOperasi.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(6,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(7,1).toString().equals("Yes")){
                 chkObat.setSelected(true);
-            }else if(tbAdmin2.getValueAt(6,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(7,1).toString().equals("No")){
                 chkObat.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(7,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(8,1).toString().equals("Yes")){
                 chkRanapDokter.setSelected(true);
-            }else if(tbAdmin2.getValueAt(7,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(8,1).toString().equals("No")){
                 chkRanapDokter.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(8,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(9,1).toString().equals("Yes")){
                 chkRanapParamedis.setSelected(true);
-            }else if(tbAdmin2.getValueAt(8,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(9,1).toString().equals("No")){
                 chkRanapParamedis.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(9,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(10,1).toString().equals("Yes")){
                 chkRalanDokter.setSelected(true);
-            }else if(tbAdmin2.getValueAt(9,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(10,1).toString().equals("No")){
                 chkRalanDokter.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(10,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(11,1).toString().equals("Yes")){
                 chkRalanParamedis.setSelected(true);
-            }else if(tbAdmin2.getValueAt(10,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(11,1).toString().equals("No")){
                 chkRalanParamedis.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(11,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(12,1).toString().equals("Yes")){
                 chkTambahan.setSelected(true);
-            }else if(tbAdmin2.getValueAt(11,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(12,1).toString().equals("No")){
                 chkTambahan.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(12,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(13,1).toString().equals("Yes")){
                 chkPotongan.setSelected(true);
-            }else if(tbAdmin2.getValueAt(12,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(13,1).toString().equals("No")){
                 chkPotongan.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(13,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(14,1).toString().equals("Yes")){
                 chkKamar.setSelected(true);
-            }else if(tbAdmin2.getValueAt(13,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(14,1).toString().equals("No")){
                 chkKamar.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(14,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(15,1).toString().equals("Yes")){
                 chkRegistrasi.setSelected(true);
-            }else if(tbAdmin2.getValueAt(14,11).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(15,11).toString().equals("No")){
                 chkRegistrasi.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(15,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(16,1).toString().equals("Yes")){
                 chkHarian.setSelected(true);
-            }else if(tbAdmin2.getValueAt(15,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(16,1).toString().equals("No")){
                 chkHarian.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(16,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(17,1).toString().equals("Yes")){
                 chkRetur.setSelected(true);
-            }else if(tbAdmin2.getValueAt(16,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(17,1).toString().equals("No")){
                 chkRetur.setSelected(false);
             }
-            if(tbAdmin2.getValueAt(17,1).toString().equals("Yes")){
+            if(tbAdmin2.getValueAt(18,1).toString().equals("Yes")){
                 chkResepPulang.setSelected(true);
-            }else if(tbAdmin2.getValueAt(17,1).toString().equals("No")){
+            }else if(tbAdmin2.getValueAt(18,1).toString().equals("No")){
                 chkResepPulang.setSelected(false);
             }
         }
@@ -2774,79 +2817,80 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
         if(row!= -1){
             NamaService1.setText(tbAdmin3.getValueAt(0,1).toString());            
             BesarBiaya1.setText(tbAdmin3.getValueAt(1,1).toString());    
-            if(tbAdmin3.getValueAt(3,1).toString().equals("Yes")){
+            BiayaMaksPiutang.setText(tbAdmin3.getValueAt(2, 1).toString());
+            if(tbAdmin3.getValueAt(4,1).toString().equals("Yes")){
                 chkLaborat1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(3,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(4,1).toString().equals("No")){
                 chkLaborat1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(4,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(5,1).toString().equals("Yes")){
                 chkRadiologi1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(4,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(5,1).toString().equals("No")){
                 chkRadiologi1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(5,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(6,1).toString().equals("Yes")){
                 chkOperasi1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(5,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(6,1).toString().equals("No")){
                 chkOperasi1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(6,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(7,1).toString().equals("Yes")){
                 chkObat1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(6,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(7,1).toString().equals("No")){
                 chkObat1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(7,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(8,1).toString().equals("Yes")){
                 chkRanapDokter1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(7,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(8,1).toString().equals("No")){
                 chkRanapDokter1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(8,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(9,1).toString().equals("Yes")){
                 chkRanapParamedis1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(8,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(9,1).toString().equals("No")){
                 chkRanapParamedis1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(9,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(10,1).toString().equals("Yes")){
                 chkRalanDokter1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(9,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(10,1).toString().equals("No")){
                 chkRalanDokter1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(10,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(11,1).toString().equals("Yes")){
                 chkRalanParamedis1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(10,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(11,1).toString().equals("No")){
                 chkRalanParamedis1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(11,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(12,1).toString().equals("Yes")){
                 chkTambahan1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(11,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(12,1).toString().equals("No")){
                 chkTambahan1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(12,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(13,1).toString().equals("Yes")){
                 chkPotongan1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(12,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(13,1).toString().equals("No")){
                 chkPotongan1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(13,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(14,1).toString().equals("Yes")){
                 chkKamar1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(13,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(14,1).toString().equals("No")){
                 chkKamar1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(14,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(15,1).toString().equals("Yes")){
                 chkRegistrasi1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(14,11).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(15,1).toString().equals("No")){
                 chkRegistrasi1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(15,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(16,1).toString().equals("Yes")){
                 chkHarian1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(15,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(16,1).toString().equals("No")){
                 chkHarian1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(16,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(17,1).toString().equals("Yes")){
                 chkRetur1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(16,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(17,1).toString().equals("No")){
                 chkRetur1.setSelected(false);
             }
-            if(tbAdmin3.getValueAt(17,1).toString().equals("Yes")){
+            if(tbAdmin3.getValueAt(18,1).toString().equals("Yes")){
                 chkResepPulang1.setSelected(true);
-            }else if(tbAdmin3.getValueAt(17,1).toString().equals("No")){
+            }else if(tbAdmin3.getValueAt(18,1).toString().equals("No")){
                 chkResepPulang1.setSelected(false);
             }
         }
@@ -2904,6 +2948,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     public void emptTeks3() {
         NamaService1.setText("");
         BesarBiaya1.setText("");
+        BiayaMaksPiutang.setText("");
         chkLaborat1.setSelected(false);
         chkRadiologi1.setSelected(false);
         chkOperasi1.setSelected(false);
@@ -2952,7 +2997,7 @@ private void NotaRalanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event
     private void isForm3(){
         if(ChkInput3.isSelected()==true){
             ChkInput3.setVisible(false);
-            PanelInput3.setPreferredSize(new Dimension(WIDTH,187));
+            PanelInput3.setPreferredSize(new Dimension(WIDTH,217));
             FormInput3.setVisible(true);      
             ChkInput3.setVisible(true);
         }else if(ChkInput3.isSelected()==false){           
