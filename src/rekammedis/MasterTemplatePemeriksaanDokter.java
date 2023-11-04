@@ -946,7 +946,7 @@ public class MasterTemplatePemeriksaanDokter extends javax.swing.JDialog {
             }
         });
         FormInput.add(Kd);
-        Kd.setBounds(89, 10, 120, 23);
+        Kd.setBounds(89, 10, 150, 23);
 
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel40.setText("Subjek :");
@@ -3887,7 +3887,7 @@ private void KdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TKdKey
         
             ps=koneksi.prepareStatement(
                     "select jns_perawatan.kd_jenis_prw,jns_perawatan.nm_perawatan,kategori_perawatan.nm_kategori from jns_perawatan inner join kategori_perawatan "+
-                    "on jns_perawatan.kd_kategori=kategori_perawatan.kd_kategori where jns_perawatan.status='1' order by jns_perawatan.kd_jenis_prw");
+                    "on jns_perawatan.kd_kategori=kategori_perawatan.kd_kategori where jns_perawatan.status='1' and jns_perawatan.total_byrdr>0 order by jns_perawatan.kd_jenis_prw");
             try {
                 rs=ps.executeQuery();
                 while(rs.next()){

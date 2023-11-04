@@ -134,18 +134,18 @@
                                                                                     inner join dokter on reg_periksa.kd_dokter=dokter.kd_dokter inner join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli 
                                                                                     where reg_periksa.no_rawat='".$rsquery["no_rawat"]."'");
                                                             if($rsqueryralan = mysqli_fetch_array($queryralan)) {
-                                                                $kodelokasi = $rsqueryralan["kd_poli"];
+                                                                $kodelokasi = "0001";
                                                                 $namalokasi = $rsqueryralan["nm_poli"];
-                                                                $kodedokter = $rsqueryralan["kd_dokter"];
+                                                                $kodedokter = $rsqueryralan["kd_poli"];
                                                                 $namadokter = $rsqueryralan["nm_dokter"];
                                                             }
                                                         }else if($rsquery["status_lanjut"]=="Ranap"){
                                                             $queryranap = bukaquery2("select kamar_inap.kd_kamar,kamar.kelas,bangsal.kd_bangsal,bangsal.nm_bangsal from kamar_inap inner join kamar on kamar_inap.kd_kamar=kamar.kd_kamar
                                                                                       inner join bangsal on kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat='".$rsquery["no_rawat"]."' order by kamar_inap.tgl_masuk desc limit 1");
                                                             if($rsqueryranap = mysqli_fetch_array($queryranap)) {
-                                                                $kodelokasi = $rsqueryranap["kd_bangsal"];
+                                                                $kodelokasi = "0002";
                                                                 $namalokasi = $rsqueryranap["nm_bangsal"];
-                                                                $kodedokter = $rsqueryranap["kd_kamar"];
+                                                                $kodedokter = $rsqueryranap["kd_bangsal"];
                                                                 $namadokter = $rsqueryranap["kelas"];
                                                             }
                                                         }
@@ -181,7 +181,7 @@
                                                                 'golDarah' => '-',
                                                                 'timeStamp' => $rsquery["tgl_closing"].'.000',
                                                                 'status' => array(
-                                                                    'inquryCode' => $decode['regNo'],
+                                                                    'inquiryCode' => $decode['regNo'],
                                                                     'statusCode' => '1',
                                                                     'statusDescription' => 'Sukses'
                                                                 ),
@@ -207,7 +207,7 @@
                                                             'golDarah' => '',
                                                             'timeStamp' => date('Y-m-d H:i:s'),
                                                             'status' => array(
-                                                                'inquryCode' => $decode['regNo'],
+                                                                'inquiryCode' => $decode['regNo'],
                                                                 'statusCode' => '2',
                                                                 'statusDescription' => 'Data Tidak Ditemukan'
                                                             ),
@@ -324,7 +324,7 @@
                                                                 'golDarah' => '-',
                                                                 'timeStamp' => date('Y-m-d H:i:s').'.000',
                                                                 'status' => array(
-                                                                    'inquryCode' => $rsquery["no_rkm_medis"],
+                                                                    'inquiryCode' => $rsquery["no_rkm_medis"],
                                                                     'statusCode' => '1',
                                                                     'statusDescription' => 'Sukses'
                                                                 ),
@@ -350,7 +350,7 @@
                                                             'golDarah' => '',
                                                             'timeStamp' => date('Y-m-d H:i:s'),
                                                             'status' => array(
-                                                                'inquryCode' => $decode['regNo'],
+                                                                'inquiryCode' => $decode['regNo'],
                                                                 'statusCode' => '2',
                                                                 'statusDescription' => 'Data Tidak Ditemukan'
                                                             ),
@@ -495,30 +495,6 @@
                                                 'error_description' => 'Error paidFlag'
                                             );
                                             http_response_code(401);
-                                        }else if(!isset($decode['cancelFlag'])){ 
-                                            $response = array(
-                                                'error' => 'invalid_parameter',
-                                                'error_description' => 'Error cancelFlag'
-                                            );
-                                            http_response_code(401);
-                                        }else if(!preg_match("/^[0-9]{1}$/",$decode['cancelFlag'])){
-                                            $response = array(
-                                                'error' => 'invalid_parameter',
-                                                'error_description' => 'Error cancelFlag'
-                                            );
-                                            http_response_code(401);
-                                        }else if(!isset($decode['isCancel'])){ 
-                                            $response = array(
-                                                'error' => 'invalid_parameter',
-                                                'error_description' => 'Error isCancel'
-                                            );
-                                            http_response_code(401);
-                                        }else if(!preg_match("/^[0-9]{1}$/",$decode['isCancel'])){
-                                            $response = array(
-                                                'error' => 'invalid_parameter',
-                                                'error_description' => 'Error isCancel'
-                                            );
-                                            http_response_code(401);
                                         }else if(!isset($decode['paymentBill'])){ 
                                             $response = array(
                                                 'error' => 'invalid_parameter',
@@ -529,18 +505,6 @@
                                             $response = array(
                                                 'error' => 'invalid_parameter',
                                                 'error_description' => 'Error paymentBill'
-                                            );
-                                            http_response_code(401);
-                                        }else if(!isset($decode['cancelNominal'])){ 
-                                            $response = array(
-                                                'error' => 'invalid_parameter',
-                                                'error_description' => 'Error cancelNominal'
-                                            );
-                                            http_response_code(401);
-                                        }else if(!preg_match("/^[0-9]{1,15}$/",$decode['cancelNominal'])){
-                                            $response = array(
-                                                'error' => 'invalid_parameter',
-                                                'error_description' => 'Error cancelNominal'
                                             );
                                             http_response_code(401);
                                         }else if(!isset($decode['newPaymentBill'])){ 
@@ -600,10 +564,7 @@
                                             $trxNo            = validTeks3($decode['trxNo'],17);
                                             $noKuitansi       = validTeks3($decode['noKuitansi'],17);
                                             $paidFlag         = validTeks3($decode['paidFlag'],1);
-                                            $cancelFlag       = validTeks3($decode['cancelFlag'],1);
-                                            $isCancel         = validTeks3($decode['isCancel'],1);
                                             $paymentBill      = validTeks3($decode['paymentBill'],15);
-                                            $cancelNominal    = validTeks3($decode['cancelNominal'],15);
                                             $newPaymentBill   = validTeks3($decode['newPaymentBill'],15);
                                             $additional1      = validTeks3($decode['additional1'],75);
                                             $additional2      = validTeks3($decode['additional2'],75);
@@ -768,21 +729,21 @@
                                                     $namadokter = "";
                                                     if($rsquery["status_lanjut"]=="Ralan"){
                                                         $queryralan = bukaquery2("select reg_periksa.kd_dokter,dokter.nm_dokter,reg_periksa.kd_poli,poliklinik.nm_poli from reg_periksa 
-                                                                                  inner join dokter on reg_periksa.kd_dokter=dokter.kd_dokter inner join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli 
-                                                                                  where reg_periksa.no_rawat='".$rsquery["no_rawat"]."'");
+                                                                                inner join dokter on reg_periksa.kd_dokter=dokter.kd_dokter inner join poliklinik on reg_periksa.kd_poli=poliklinik.kd_poli 
+                                                                                where reg_periksa.no_rawat='".$rsquery["no_rawat"]."'");
                                                         if($rsqueryralan = mysqli_fetch_array($queryralan)) {
-                                                            $kodelokasi = $rsqueryralan["kd_poli"];
+                                                            $kodelokasi = "0001";
                                                             $namalokasi = $rsqueryralan["nm_poli"];
-                                                            $kodedokter = $rsqueryralan["kd_dokter"];
+                                                            $kodedokter = $rsqueryralan["kd_poli"];
                                                             $namadokter = $rsqueryralan["nm_dokter"];
                                                         }
                                                     }else if($rsquery["status_lanjut"]=="Ranap"){
                                                         $queryranap = bukaquery2("select kamar_inap.kd_kamar,kamar.kelas,bangsal.kd_bangsal,bangsal.nm_bangsal from kamar_inap inner join kamar on kamar_inap.kd_kamar=kamar.kd_kamar
                                                                                   inner join bangsal on kamar.kd_bangsal=bangsal.kd_bangsal where kamar_inap.no_rawat='".$rsquery["no_rawat"]."' order by kamar_inap.tgl_masuk desc limit 1");
                                                         if($rsqueryranap = mysqli_fetch_array($queryranap)) {
-                                                            $kodelokasi = $rsqueryranap["kd_bangsal"];
+                                                            $kodelokasi = "0002";
                                                             $namalokasi = $rsqueryranap["nm_bangsal"];
-                                                            $kodedokter = $rsqueryranap["kd_kamar"];
+                                                            $kodedokter = $rsqueryranap["kd_bangsal"];
                                                             $namadokter = $rsqueryranap["kelas"];
                                                         }
                                                     }
@@ -818,7 +779,7 @@
                                                             'golDarah' => '-',
                                                             'timeStamp' => $rsquery["tgl_closing"].'.000',
                                                             'status' => array(
-                                                                'inquryCode' => $rsquery["referensi"],
+                                                                'inquiryCode' => $rsquery["referensi"],
                                                                 'statusCode' => '1',
                                                                 'statusDescription' => 'Sukses'
                                                             ),
@@ -844,7 +805,7 @@
                                                         'golDarah' => '',
                                                         'timeStamp' => date('Y-m-d H:i:s'),
                                                         'status' => array(
-                                                            'inquryCode' => $decode['noKuitansi'],
+                                                            'inquiryCode' => $decode['noKuitansi'],
                                                             'statusCode' => '2',
                                                             'statusDescription' => 'Data Tidak Ditemukan'
                                                         ),
@@ -1129,7 +1090,7 @@
                                             if(num_rows($query)>0){
                                                 if($rsquery = mysqli_fetch_array($query)){
                                                     if($rsquery["besar_bayar"]==$paymentBill){
-                                                        $querybayar = bukaquery2("update tagihan_mandiri set status_bayar='Sudah',besar_bayar='$newPaymentBill',tambahan1='$additional1',tambahan2='$additional2',tambahan3='$additional3',diupdatebank='$timeStamp',pembatalan='$cancelFlag',dibatalkan_oleh='$isCancel',besar_batal='$cancelNominal',
+                                                        $querybayar = bukaquery2("update tagihan_mandiri set status_bayar='Sudah',besar_bayar='$newPaymentBill',tambahan1='$additional1',tambahan2='$additional2',tambahan3='$additional3',diupdatebank='$timeStamp',pembatalan='Belum Dibatalkan',dibatalkan_oleh='MHAS',besar_batal='$cancelNominal',
                                                                                   referensi='$noKuitansi' where referensi='$oldNoKuitansi' and no_nota='$trxNo' and no_id='$regNo' and no_rkm_medis='$rmNo' and nm_pasien='$pasienName' and tgl_registrasi='$regDate' and status_lanjut='$jenisPelayananId'");
                                                         if($querybayar){
                                                             $response = array(
@@ -1331,7 +1292,7 @@
         echo '          "golDarah": "x",'."\n";
         echo '          "timeStamp": "0000-00-00 00:00:00.000",'."\n";
         echo '          "status": {'."\n";
-        echo '              "inquryCode": "xxxxxxxxx",'."\n";
+        echo '              "inquiryCode": "xxxxxxxxx",'."\n";
         echo '              "statusCode": "0",'."\n";
         echo '              "statusDescription": "xxxxxxxxx"'."\n";
         echo '          },'."\n";
@@ -1385,7 +1346,7 @@
         echo '          "golDarah": "x",'."\n";
         echo '          "timeStamp": "0000-00-00 00:00:00.000",'."\n";
         echo '          "status": {'."\n";
-        echo '              "inquryCode": "xxxxxxxxx",'."\n";
+        echo '              "inquiryCode": "xxxxxxxxx",'."\n";
         echo '              "statusCode": "0",'."\n";
         echo '              "statusDescription": "xxxxxxxxx"'."\n";
         echo '          },'."\n";
@@ -1481,7 +1442,7 @@
         echo '          "golDarah": "x",'."\n";
         echo '          "timeStamp": "0000-00-00 00:00:00.000",'."\n";
         echo '          "status": {'."\n";
-        echo '              "inquryCode": "xxxxxxxxx",'."\n";
+        echo '              "inquiryCode": "xxxxxxxxx",'."\n";
         echo '              "statusCode": "0",'."\n";
         echo '              "statusDescription": "xxxxxxxxx"'."\n";
         echo '          },'."\n";
