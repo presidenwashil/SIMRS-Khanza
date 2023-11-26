@@ -215,7 +215,9 @@ public final class akses {
             akun_host_to_host_bank_mandiri=false,penilaian_medis_hemodialisa=false,penilaian_level_kecemasan_ranap_anak=false,penilaian_lanjutan_resiko_jatuh_psikiatri=false,
             penilaian_lanjutan_skrining_fungsional=false,penilaian_medis_ralan_rehab_medik=false,laporan_anestesi=false,template_persetujuan_penolakan_tindakan=false,
             penilaian_medis_ralan_gawat_darurat_psikiatri=false,bpjs_referensi_setting_apotek=false,bpjs_referensi_obat_apotek=false,bpjs_mapping_obat_apotek=false,
-            pembayaran_bank_mandiri=false,penilaian_ulang_nyeri=false,penilaian_terapi_wicara=false;
+            pembayaran_bank_mandiri=false,penilaian_ulang_nyeri=false,penilaian_terapi_wicara=false,bpjs_obat_23hari_apotek=false,pengkajian_restrain=false,
+            bpjs_kunjungan_sep_apotek=false,bpjs_monitoring_klaim_apotek=false,bpjs_daftar_pelayanan_obat_apotek=false,penilaian_awal_medis_ralan_paru=false,
+            catatan_keperawatan_ralan=false;
     
     public static void setData(String user, String pass) {
         try {        
@@ -1222,6 +1224,13 @@ public final class akses {
                         akses.pembayaran_bank_mandiri=true;
                         akses.penilaian_ulang_nyeri=true;
                         akses.penilaian_terapi_wicara=true;
+                        akses.bpjs_obat_23hari_apotek=true;
+                        akses.pengkajian_restrain=true;
+                        akses.bpjs_kunjungan_sep_apotek=true;
+                        akses.bpjs_monitoring_klaim_apotek=true;
+                        akses.bpjs_daftar_pelayanan_obat_apotek=true;
+                        akses.penilaian_awal_medis_ralan_paru=true;
+                        akses.catatan_keperawatan_ralan=true;
                     }else if(rs2.getRow()>=1){   
                         rs2.beforeFirst();
                         rs2.next();
@@ -2212,6 +2221,13 @@ public final class akses {
                         akses.pembayaran_bank_mandiri=rs2.getBoolean("pembayaran_bank_mandiri");
                         akses.penilaian_ulang_nyeri=rs2.getBoolean("penilaian_ulang_nyeri");
                         akses.penilaian_terapi_wicara=rs2.getBoolean("penilaian_terapi_wicara");
+                        akses.bpjs_obat_23hari_apotek=rs2.getBoolean("bpjs_obat_23hari_apotek");
+                        akses.pengkajian_restrain=rs2.getBoolean("pengkajian_restrain");
+                        akses.bpjs_kunjungan_sep_apotek=rs2.getBoolean("bpjs_kunjungan_sep_apotek");
+                        akses.bpjs_monitoring_klaim_apotek=rs2.getBoolean("bpjs_monitoring_klaim_apotek");
+                        akses.bpjs_daftar_pelayanan_obat_apotek=rs2.getBoolean("bpjs_daftar_pelayanan_obat_apotek");
+                        akses.penilaian_awal_medis_ralan_paru=rs2.getBoolean("penilaian_awal_medis_ralan_paru");
+                        akses.catatan_keperawatan_ralan=rs2.getBoolean("catatan_keperawatan_ralan");
                     }else if((rs.getRow()==0)&&(rs2.getRow()==0)){
                         akses.kode="";                  
                         akses.penyakit= false;
@@ -3200,6 +3216,13 @@ public final class akses {
                         akses.pembayaran_bank_mandiri=false;
                         akses.penilaian_ulang_nyeri=false;
                         akses.penilaian_terapi_wicara=false;
+                        akses.bpjs_obat_23hari_apotek=false;
+                        akses.pengkajian_restrain=false;
+                        akses.bpjs_kunjungan_sep_apotek=false;
+                        akses.bpjs_monitoring_klaim_apotek=false;
+                        akses.bpjs_daftar_pelayanan_obat_apotek=false;
+                        akses.penilaian_awal_medis_ralan_paru=false;
+                        akses.catatan_keperawatan_ralan=false;
                     }
                 } catch (Exception e) {
                     System.out.println("Notifikasi : "+e);
@@ -4211,6 +4234,13 @@ public final class akses {
         akses.pembayaran_bank_mandiri=false;
         akses.penilaian_ulang_nyeri=false;
         akses.penilaian_terapi_wicara=false;
+        akses.bpjs_obat_23hari_apotek=false;
+        akses.pengkajian_restrain=false;
+        akses.bpjs_kunjungan_sep_apotek=false;
+        akses.bpjs_monitoring_klaim_apotek=false;
+        akses.bpjs_daftar_pelayanan_obat_apotek=false;
+        akses.penilaian_awal_medis_ralan_paru=false;
+        akses.catatan_keperawatan_ralan=false;
     }
     
     public static int getjml1() {return akses.jml1;}    
@@ -5238,4 +5268,11 @@ public final class akses {
     public static boolean getpembayaran_bank_mandiri(){return akses.pembayaran_bank_mandiri;}
     public static boolean getpenilaian_ulang_nyeri(){return akses.penilaian_ulang_nyeri;}
     public static boolean getpenilaian_terapi_wicara(){return akses.penilaian_terapi_wicara;}
+    public static boolean getbpjs_obat_23hari_apotek(){return akses.bpjs_obat_23hari_apotek;}
+    public static boolean getpengkajian_restrain(){return akses.pengkajian_restrain;}
+    public static boolean getbpjs_kunjungan_sep_apotek(){return akses.bpjs_kunjungan_sep_apotek;}
+    public static boolean getbpjs_monitoring_klaim_apotek(){return akses.bpjs_monitoring_klaim_apotek;}
+    public static boolean getbpjs_daftar_pelayanan_obat_apotek(){return akses.bpjs_daftar_pelayanan_obat_apotek;}
+    public static boolean getpenilaian_awal_medis_ralan_paru(){return akses.penilaian_awal_medis_ralan_paru;}
+    public static boolean getcatatan_keperawatan_ralan(){return akses.catatan_keperawatan_ralan;}
 }   
