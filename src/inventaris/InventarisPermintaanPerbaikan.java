@@ -473,7 +473,7 @@ public final class InventarisPermintaanPerbaikan extends javax.swing.JDialog {
         jLabel19.setBounds(6, 10, 54, 23);
 
         DTPCari1.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20-08-2020" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-08-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
@@ -489,7 +489,7 @@ public final class InventarisPermintaanPerbaikan extends javax.swing.JDialog {
         jLabel21.setBounds(160, 10, 23, 23);
 
         DTPCari2.setForeground(new java.awt.Color(50, 70, 50));
-        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20-08-2020" }));
+        DTPCari2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-08-2023" }));
         DTPCari2.setDisplayFormat("dd-MM-yyyy");
         DTPCari2.setName("DTPCari2"); // NOI18N
         DTPCari2.setOpaque(false);
@@ -608,10 +608,15 @@ public final class InventarisPermintaanPerbaikan extends javax.swing.JDialog {
         FormInput.add(label8);
         label8.setBounds(373, 10, 200, 23);
 
-        tgl_permintaan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "20-08-2020" }));
+        tgl_permintaan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "30-08-2023 15:59:10" }));
         tgl_permintaan.setDisplayFormat("dd-MM-yyyy HH:mm:ss");
         tgl_permintaan.setName("tgl_permintaan"); // NOI18N
         tgl_permintaan.setOpaque(false);
+        tgl_permintaan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                tgl_permintaanItemStateChanged(evt);
+            }
+        });
         tgl_permintaan.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 tgl_permintaanKeyPressed(evt);
@@ -1074,6 +1079,10 @@ private void tgl_permintaanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:
             btnInvActionPerformed(null);
         }
     }//GEN-LAST:event_no_inventarisKeyPressed
+
+    private void tgl_permintaanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_tgl_permintaanItemStateChanged
+        Valid.autoNomorSmc(nopermintaan, "PPI", "permintaan_perbaikan_inventaris", "no_permintaan", 3, "0", evt);
+    }//GEN-LAST:event_tgl_permintaanItemStateChanged
 
     /**
     * @param args the command line arguments
