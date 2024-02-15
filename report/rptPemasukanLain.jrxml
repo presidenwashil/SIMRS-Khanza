@@ -82,9 +82,6 @@
 	<variable name="total" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{besar}]]></variableExpression>
 	</variable>
-	<background>
-		<band height="91" splitType="Stretch"/>
-	</background>
 	<title>
 		<band height="84" splitType="Stretch">
 			<staticText>
@@ -377,14 +374,14 @@
 				<text><![CDATA[Mengetahui]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="570" y="80" width="110" height="11" uuid="20274e87-9455-437b-9bd0-0df133405e5c">
+				<reportElement x="540" y="80" width="170" height="11" uuid="20274e87-9455-437b-9bd0-0df133405e5c">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[ dr. Teguh Nurwanto, MARS]]></text>
+				<text><![CDATA[ dr. TEGUH NURWANTO, MARS]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="48" y="94" width="75" height="11" uuid="3af9285d-6603-4aa0-9c45-e5e2320003d3">
@@ -404,18 +401,18 @@
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[dr. Daisy Wijaya]]></text>
+				<text><![CDATA[dr. DAISY WIJAYA]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="590" y="94" width="70" height="11" uuid="69afab49-7698-4468-b474-77a494da3097">
+			<textField>
+				<reportElement x="540" y="94" width="170" height="11" uuid="916dd5ef-30bb-4707-b3e1-b66d8837f571">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="Tahoma" size="8"/>
 				</textElement>
-				<text><![CDATA[Direktur]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA["Direktur " + $P{namars}]]></textFieldExpression>
+			</textField>
 			<staticText>
 				<reportElement x="60" y="40" width="50" height="11" uuid="5a5196ad-38a4-4b03-bada-6df38d065594">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
